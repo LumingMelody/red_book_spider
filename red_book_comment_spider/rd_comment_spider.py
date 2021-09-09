@@ -102,8 +102,8 @@ proxies = {
 }
 
 if __name__ == '__main__':
-    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_07_28\【评论词云】一杯芝士小红书7月种草13位博主笔记链接0728.xlsx")
-    urls = df['小红书发布链接🔗']
+    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_06\red_book_result_09_06_1.xlsx")
+    urls = df['文章链接']
     for url in urls:
         note_id = url.split("/")[-1]
         rs = wh.get_note_comments(note_id)
@@ -115,8 +115,9 @@ if __name__ == '__main__':
                     comments = rs['result']['data']['comments']
                     for comment in comments:
                         content = comment['content']
+                        print(content)
                         ws.append([content])
                     cursor = rs['result']['cursor']
                     rs = wh.get_note_comments(note_id, cursor)
                     comments = rs['result']['data']['comments']
-            wb.save(r"D:\red_book\red_book_51wom\red_book_07_28\red_book_comment.xlsx")
+            wb.save(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_06\red_book_comment.xlsx")
