@@ -21,7 +21,7 @@ APP_NAME = 'whosecard_open_platform'
 
 BASE_URI = 'http://whosecard.com:8081'
 APP_CONFIG = {
-    'KEY': '55b69c89f13291700c70b1c36a36a7611e25ea04058074072241fd46'
+    'KEY': ''
 }
 XHS_API_PATH = {
     'search_notes': '/api/xiaohongshu/search/notes/v1',
