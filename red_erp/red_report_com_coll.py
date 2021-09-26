@@ -123,16 +123,16 @@ def main(n_id):
             timeArray = time.localtime(note_ts)
             note_time = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
             u_id = result['result']['data'][0]['user']['id']
-            # user_info = wh.get_user_info(u_id)
-            # # print(user_info)
-            # user_fans = user_info['result']['data']['fans']
+            user_info = wh.get_user_info(u_id)
+            # print(user_info)
+            user_fans = user_info['result']['data']['fans']
             report_com_coll = int(liked_count) + int(collected_count) + int(comments_count)
-            # ws.append([name, user_fans, title, desc, note_url, liked_count, collected_count, comments_count, note_time,
-            #            has_keyword])
-            ws.append([name, title, desc, note_url, liked_count, collected_count, comments_count, note_time,
-                       has_keyword, report_com_coll])
-            wb.save(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_09\result_09_09.xlsx")
-            print([name, title, desc, note_url, liked_count, collected_count, comments_count, note_time,
+            ws.append([name, user_fans, title, desc, note_url, liked_count, collected_count, comments_count, note_time,
+                       has_keyword])
+            # ws.append([name, title, desc, note_url, liked_count, collected_count, comments_count, note_time,
+            #            has_keyword, report_com_coll])
+            wb.save(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_24\red_book_result_09_24.xlsx")
+            print([name, user_fans, title, desc, note_url, liked_count, collected_count, comments_count, note_time,
                    has_keyword])
     except Exception as a:
         print(a)
@@ -142,8 +142,8 @@ if __name__ == '__main__':
     # main("6040aff80000000001028082")
     # df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_01\reds.xlsx")
     # note_ids = df['文章ID']
-    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_09\数据维护-娇韵诗双萃精华发布链接 数据采集需求表9.9.xlsx")
-    urls = df['推文长链接']
+    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_24\red_book09_24.xlsx")
+    urls = df['文章链接']
     try:
         # for note_id in note_ids:
         #     main(note_id)

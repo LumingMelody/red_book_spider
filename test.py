@@ -118,10 +118,14 @@
 #
 
 # print(8 >> 2)
-import json
+# import json
+#
+# a = [{'a': 3, 'b': 4, 'c': '5'}]
+# a = str(a).replace("]", "").replace("[", '')
+# a = json.dumps(a)
+# print(a)
+# print(type(a))
 
-a = [{'a': 3, 'b': 4, 'c': '5'}]
-a = str(a).replace("]", "").replace("[", '')
-a = json.dumps(a)
-print(a)
-print(type(a))
+
+for i in range(50):
+    print(i+1)

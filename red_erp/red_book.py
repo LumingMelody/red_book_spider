@@ -114,7 +114,7 @@ USER_AGENTS = [
     # "Mozilla/6.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/8.0 Mobile/10A5376e Safari/8536.25",
 ]
 
-cookie = "xhsTrackerId=ce649b22-f7c7-4686-c678-cc14d2c02782; xhsuid=wlNhixrVouQc1xH6; customerClientId=559394368134108; Hm_lvt_d0ae755ac51e3c5ff9b1596b0c09c826=1617094977,1617094988; smidV2=202104061553193a7c1a21482c01657352bb93535ed8a2007fa273ba4ff5ac0; xhs_spid.5dde=3af7c19f4aa1caf1.1617094977.13.1621407883.1620637217.692ca0a4-eabc-4f38-b1e9-ec9c4b8d49cb; xhsTracker=url=user-profile&xhsshare=CopyLink; timestamp2=20210804ad87a22f804c577cd2b4f9a3; timestamp2.sig=lsTRDLj5pOpLpPw7YKWAtWWbY5ZqlFdSk8g4Iqzm2uQ; extra_exp_ids=gif_exp1,ques_exp2"
+cookie = "xhsTrackerId=d27d1e9b-d1d9-49ec-c900-63c57a046119; customerClientId=489273405129650; smidV2=2021090915544119498ec8a46b5cef9f8028d53929d60c009c08c9409ce1eb0; xhsTracker=url=noteDetail&xhsshare=CopyLink; extra_exp_ids=gif_clt1,ques_clt1; timestamp2=20210923052eb992f8ab1118aa90a997; timestamp2.sig=Q3udsdr_q59-NTm35duuMV9txfuYp-KspGkg6gwWefA"
 headers = {
     "User-Agent": random.choice(USER_AGENTS),
     "cookie": cookie,
