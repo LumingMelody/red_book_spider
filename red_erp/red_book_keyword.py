@@ -372,79 +372,89 @@ if __name__ == '__main__':
     # rs = wh.get_note_comments()
     # print(rs)
     for i in range(50):
-        rs = wh.get_search_notes("雏菊的天空翡冷翠", page=i+1)
+        rs = wh.get_search_notes("科颜氏高保湿", page=i + 1)
         print(rs)
         try:
             if rs and rs['result']['data'] is not None:
                 items = rs['result']['data']['items']
+                print(len(items))
                 for item in items:
-                    print(item)
+                    # print(item)
                     # note_ts = item['note']['timestamp']
                     # if int(note_ts) <= 1600790400:
                     #     break
-                    user_id = item['note']['user']['userid']
-                    user_url = f'https://www.xiaohongshu.com/user/profile/{user_id}'
-                    note_id = item['note']['id']
-                    note_url = f'https://www.xiaohongshu.com/discovery/item/{note_id}'
-                    note_type = item['model_type']
-                    user_info = wh.get_user_info(user_id)['result']['data']
-                    nickname = user_info['nickname']
-                    sign = user_info['desc']
-                    user_level = user_info['level']['level_name']
-                    user_location = user_info['location']
-                    user_fans_num = user_info['fans']
-                    if 0 <= user_fans_num <= 50000:
-                        user_fans_level = '素人'
-                    elif 50000 <= user_fans_num <= 200000:
-                        user_fans_level = '底部kol'
-                    elif 200000 <= user_fans_num <= 1000000:
-                        user_fans_level = '腰部kol'
-                    else:
-                        user_fans_level = '头部kol'
-                    user_like_num = user_info['liked']
-                    user_follows_num = user_info['follows']
-                    user_collected_num = user_info['collected']
-                    user_like_collected_num = int(user_like_num) + int(user_collected_num)
-                    note_num = user_info['ndiscovery']
-                    note_info = wh.get_note_detail(note_id)['result']['data'][0]['note_list'][0]
-                    note_title = note_info['title']
-                    note_content = note_info['desc']
-                    note_ts = note_info['time']
-                    timeArray = time.localtime(note_ts)
-                    note_time = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-                    note_likes = note_info['liked_count']
-                    note_comments = note_info['comments_count']
-                    note_coll = note_info['collected_count']
-                    note_share = note_info['shared_count']
-                    note_collected_like = int(note_likes) + int(note_coll)
-                    # 合作品牌
-                    note_cooperate_binds = ''
-                    # 评分
-                    score = round(
-                        (0.2 * (pow(log(int(note_likes) + 1), 2)) + 0.4 * (
-                            pow(log(int(note_comments) + 1), 2)) + 0.4 * (
-                             pow(log(int(note_coll) + 1), 2))), 2)
-                    # 特征词
-                    if note_info['ats']:
-                        note_ats = [note_info['ats'][i]['nickname'] for i in
-                                    range(len(note_info['ats']))]
-                    else:
-                        note_ats = []
-                    note_tags = note_ats
-                    note_tag = []
-                    for j in note_tags:
-                        if isinstance(j, dict):
-                            note_tag.append(j['name'])
+                    try:
+                        user_id = item['note']['user']['userid']
+                        user_url = f'https://www.xiaohongshu.com/user/profile/{user_id}'
+                        note_id = item['note']['id']
+                        note_url = f'https://www.xiaohongshu.com/discovery/item/{note_id}'
+                        note_type = item['model_type']
+                        user_info = wh.get_user_info(user_id)['result']['data']
+                        nickname = user_info['nickname']
+                        sign = user_info['desc']
+                        user_level = user_info['level']['level_name']
+                        user_location = user_info['location']
+                        user_fans_num = user_info['fans']
+                        if 0 <= user_fans_num <= 50000:
+                            user_fans_level = '素人'
+                        elif 50000 <= user_fans_num <= 200000:
+                            user_fans_level = '底部kol'
+                        elif 200000 <= user_fans_num <= 1000000:
+                            user_fans_level = '腰部kol'
                         else:
-                            note_tag.append(j)
-                    note_tag = str(note_tag)
-                    interaction = int(note_collected_like) / int(user_fans_num)
-                    interaction = round(interaction, 2)
-                    ws.append([user_url, nickname, sign, user_level, user_location, user_fans_num, user_fans_level,
-                               user_like_num, user_follows_num, user_collected_num, user_like_collected_num, note_num,
-                               note_url, note_type, note_title, note_content, note_time, note_ts, note_likes,
-                               note_comments, note_coll, note_share, note_collected_like, interaction, score,
-                               note_cooperate_binds, note_tag])
-                    wb.save(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_24\小红书_雏菊的天空翡冷翠_09_24_result.xlsx")
+                            user_fans_level = '头部kol'
+                        user_like_num = user_info['liked']
+                        user_follows_num = user_info['follows']
+                        user_collected_num = user_info['collected']
+                        user_like_collected_num = int(user_like_num) + int(user_collected_num)
+                        note_num = user_info['ndiscovery']
+                        note_info = wh.get_note_detail(note_id)['result']['data'][0]['note_list'][0]
+                        note_title = note_info['title']
+                        note_content = note_info['desc']
+                        note_ts = note_info['time']
+                        timeArray = time.localtime(note_ts)
+                        note_time = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+                        note_likes = note_info['liked_count']
+                        note_comments = note_info['comments_count']
+                        note_coll = note_info['collected_count']
+                        note_share = note_info['shared_count']
+                        note_collected_like = int(note_likes) + int(note_coll)
+                        # 合作品牌
+                        note_cooperate_binds = ''
+                        # 评分
+                        score = round(
+                            (0.2 * (pow(log(int(note_likes) + 1), 2)) + 0.4 * (
+                                pow(log(int(note_comments) + 1), 2)) + 0.4 * (
+                                 pow(log(int(note_coll) + 1), 2))), 2)
+                        # 特征词
+                        if note_info['ats']:
+                            note_ats = [note_info['ats'][i]['nickname'] for i in
+                                        range(len(note_info['ats']))]
+                        else:
+                            note_ats = []
+                        note_tags = note_ats
+                        note_tag = []
+                        for j in note_tags:
+                            if isinstance(j, dict):
+                                note_tag.append(j['name'])
+                            else:
+                                note_tag.append(j)
+                        note_tag = str(note_tag)
+                        interaction = int(note_collected_like) / int(user_fans_num)
+                        interaction = round(interaction, 2)
+                        ws.append([user_url, nickname, sign, user_level, user_location, user_fans_num, user_fans_level,
+                                   user_like_num, user_follows_num, user_collected_num, user_like_collected_num,
+                                   note_num, note_url, note_type, note_title, note_content, note_time, note_ts,
+                                   note_likes, note_comments, note_coll, note_share, note_collected_like, interaction,
+                                   score, note_cooperate_binds, note_tag])
+                        print([user_url, nickname, sign, user_level, user_location, user_fans_num, user_fans_level,
+                               user_like_num, user_follows_num, user_collected_num, user_like_collected_num,
+                               note_num, note_url, note_type, note_title, note_content, note_time, note_ts,
+                               note_likes, note_comments, note_coll, note_share, note_collected_like, interaction,
+                               score, note_cooperate_binds, note_tag])
+                        wb.save(r"D:\red_book\red_book_51wom\red_book_11月\red_book_11_10\小红书_"
+                                r"科颜氏高保湿_11_10_result.xlsx")
+                    except Exception as a:
+                        print(a)
         except Exception as e:
             print(e)
