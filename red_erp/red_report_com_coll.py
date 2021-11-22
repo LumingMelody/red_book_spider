@@ -29,7 +29,7 @@ ws.append([
     "收藏数",
     "评论数",
     "文章发布时间",
-    "是否含有关键词",
+    # "是否含有关键词",
 ])
 ws1.append([
     "文章ID"
@@ -102,6 +102,7 @@ def short_url_to_long_url(short_url):
 
 
 def main(n_id):
+    # print(n_id)
     result = wh.get_note_detail(n_id)
     print(result)
     try:
@@ -110,10 +111,10 @@ def main(n_id):
             name = note_list['user']['name']
             title = note_list['share_info']['title']
             desc = note_list['desc']
-            if "娇韵诗双萃精华" or "娇韵诗" or "娇韵诗双萃" in desc:
-                has_keyword = 1
-            else:
-                has_keyword = 0
+            # if "娇韵诗双萃精华" or "娇韵诗" or "娇韵诗双萃" in desc:
+            #     has_keyword = 1
+            # else:
+            #     has_keyword = 0
             note_url = f"https://www.xiaohongshu.com/discovery/item/{n_id}"
             liked_count = note_list['liked_count']
             collected_count = note_list['collected_count']
@@ -124,33 +125,48 @@ def main(n_id):
             note_time = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
             u_id = result['result']['data'][0]['user']['id']
             user_info = wh.get_user_info(u_id)
-            # print(user_info)
+            # print(user_info)1
             user_fans = user_info['result']['data']['fans']
             report_com_coll = int(liked_count) + int(collected_count) + int(comments_count)
             ws.append([name, user_fans, title, desc, note_url, liked_count, collected_count, comments_count, note_time,
-                       has_keyword])
+                       ])
             # ws.append([name, title, desc, note_url, liked_count, collected_count, comments_count, note_time,
-            #            has_keyword, report_com_coll])
-            wb.save(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_24\red_book_result_09_24.xlsx")
-            print([name, user_fans, title, desc, note_url, liked_count, collected_count, comments_count, note_time,
-                   has_keyword])
+            #            report_com_coll])
+            wb.save(r"D:\red_book\red_book_51wom\red_book_11月\red_book_11_22\red_book_result_11_22_1.xlsx")
+            print([name, title, desc, note_url, liked_count, collected_count, comments_count, note_time,
+                   ])
     except Exception as a:
         print(a)
 
 
+def geturl(url):
+    """
+    短链转长链
+    :param url:
+    :return:
+    """
+    res = requests.head(url)
+    url = res.headers.get('location')
+    return url
+
+
 if __name__ == '__main__':
-    # main("6040aff80000000001028082")
+    # main("6040aff80000000001028082")ha
     # df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_01\reds.xlsx")
     # note_ids = df['文章ID']
-    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_24\red_book09_24.xlsx")
+    # df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_11月\red_book_11_12\red_urls.xlsx")
+    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_11月\red_book_11_22\red_urls.xlsx")
     urls = df['文章链接']
+
     try:
         # for note_id in note_ids:
         #     main(note_id)
         # with ThreadPoolExecutor(10) as t:
         for url in urls:
+            # url = geturl(url)
+            # print(url)
             if 'apptime' in url:
-                note_id = url.split("/")[-1].split("?")[0]
+                note_id = url.split("/")[-1]
             # elif 'xhslink.com' in url:
             #     long_url = short_url_to_long_url(url)
             #     note_id = long_url.split("/")[-1].split("?")[0]

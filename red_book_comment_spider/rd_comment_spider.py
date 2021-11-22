@@ -84,26 +84,9 @@ headers = {
     'Connection': 'close'
 }
 
-# 代理服务器
-proxyHost = "forward.apeyun.com"
-proxyPort = "9082"
-# 代理隧道验证信息
-proxyUser = "2021040800226731834"
-proxyPass = "pA7prxttyuCTFjwM"
-proxyMeta = "http://%(user)s:%(pass)s@%(host)s:%(port)s" % {
-    "host": proxyHost,
-    "port": proxyPort,
-    "user": proxyUser,
-    "pass": proxyPass,
-}
-proxies = {
-    "http": proxyMeta,
-    "https": proxyMeta,
-}
-
 if __name__ == '__main__':
-    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_06\red_book_result_09_06_1.xlsx")
-    urls = df['文章链接']
+    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_11月\red_book_11_18\【词云采集】百吉福家庭线双十一礼盒种草.xlsx")
+    urls = df['发布链接']
     for url in urls:
         note_id = url.split("/")[-1]
         rs = wh.get_note_comments(note_id)
@@ -119,5 +102,8 @@ if __name__ == '__main__':
                         ws.append([content])
                     cursor = rs['result']['cursor']
                     rs = wh.get_note_comments(note_id, cursor)
-                    comments = rs['result']['data']['comments']
-            wb.save(r"D:\red_book\red_book_51wom\red_book_9月\red_book_09_06\red_book_comment.xlsx")
+                    if rs is not None:
+                        comments = rs['result']['data']['comments']
+                    else:
+                        break
+            wb.save(r"D:\red_book\red_book_51wom\red_book_11月\red_book_11_18\red_book_comment.xlsx")

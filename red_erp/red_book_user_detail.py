@@ -1,12 +1,14 @@
 import json
 import random
 import re
-
+from red_erp.whosecard_open_platform import WhosecardXhsSpider
 import pandas as pd
 from openpyxl import Workbook
 
 import requests
 
+
+wh = WhosecardXhsSpider()
 USER_AGENTS = [
     "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50",
     "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50",
@@ -70,6 +72,7 @@ ws.append([
 ws1.append([
     "", "", "", "", "", "", "", "", "",
 ])
+
 
 def short_url_to_long_url(short_url):
     """

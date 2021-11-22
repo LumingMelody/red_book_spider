@@ -372,7 +372,7 @@ if __name__ == '__main__':
     # rs = wh.get_note_comments()
     # print(rs)
     for i in range(50):
-        rs = wh.get_search_notes("科颜氏高保湿", page=i + 1)
+        rs = wh.get_search_notes("羽西鎏金瓶精华", page=i + 1)
         print(rs)
         try:
             if rs and rs['result']['data'] is not None:
@@ -452,8 +452,8 @@ if __name__ == '__main__':
                                note_num, note_url, note_type, note_title, note_content, note_time, note_ts,
                                note_likes, note_comments, note_coll, note_share, note_collected_like, interaction,
                                score, note_cooperate_binds, note_tag])
-                        wb.save(r"D:\red_book\red_book_51wom\red_book_11月\red_book_11_10\小红书_"
-                                r"科颜氏高保湿_11_10_result.xlsx")
+                        wb.save(r"D:\red_book\red_book_51wom\red_book_11月\red_book_11_12\小红书_"
+                                r"羽西鎏金瓶精华_11_12_result.xlsx")
                     except Exception as a:
                         print(a)
         except Exception as e:

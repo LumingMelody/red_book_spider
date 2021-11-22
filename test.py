@@ -126,6 +126,48 @@
 # print(a)
 # print(type(a))
 
+# from openpyxl import Workbook
+# import pandas as pd
+#
+# wb = Workbook()
+# ws = wb.active
+# ws.append([
+#     "粉丝数"
+# ])
+# if __name__ == '__main__':
+#     df = pd.read_excel(r"C:\python_project\dts-auto-brief\data\mweibo\展新时刻_微博_210925_211004_13851.xlsx")
+#     fans = df['粉丝数']
+#     for fan in fans:
+#         if "万" in str(fan):
+#             n_fans = fan.replace("万", "")
+#             l_fans = float(n_fans) * 10000
+#             ws.append([int(l_fans)])
+#         else:
+#             ws.append([int(fan)])
+#     wb.save(r"C:\python_project\dts-auto-brief\data\mweibo\fans.xlsx")
+import pandas as pd
+from pyecharts.charts import Pie, Bar
+from pyecharts.render import make_snapshot
+from snapshot_selenium import snapshot
+from pyecharts import options as opts
 
-for i in range(50):
-    print(i+1)
+# bar = Bar()
+# bar.add_xaxis(["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月"])
+#
+# bar.add_yaxis('自动化工单统计', ['755', '664', '1082', '692', '729', '941', '1131', '2022', '831', '760', '371'])
+# # bar.render(path='erp.jpg')
+# make_snapshot(snapshot, bar.render(), "automation_data.png")
+
+df = pd.DataFrame({"分类": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月"],
+                   "数据": [755, 664, 1082, 692, 729, 941, 1131, 2022, 831, 760, 371]})
+# v1 = [18, 59, 26, 38, 9, 17]
+x_data = df['分类'].tolist()
+y_data = df['数据'].tolist()
+c = (
+    Pie()
+        .add("", [list(z) for z in zip(x_data, y_data)])  # zip函数两个部分组合在一起list(zip(x,y))-----> [(x,y)]
+        .set_global_opts(title_opts=opts.TitleOpts(title="自动化工单统计"))  # 标题
+        .set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}%"))  # 数据标签设置
+)
+make_snapshot(snapshot, c.render(), "automation_data.png")
+# c.render("./erp.html")
