@@ -85,10 +85,13 @@ headers = {
 }
 
 if __name__ == '__main__':
-    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_11月\red_book_11_18\【词云采集】百吉福家庭线双十一礼盒种草.xlsx")
+    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_22_1月\red_book_01_14\red_urls.xlsx")
     urls = df['发布链接']
     for url in urls:
-        note_id = url.split("/")[-1]
+        if 'apptime' in url:
+            note_id = url.split("/")[-1].split("?")[0]
+        else:
+            note_id = url.split("/")[-1]
         rs = wh.get_note_comments(note_id)
         print(rs)
         # if "result" in rs['result'].keys():
@@ -106,4 +109,4 @@ if __name__ == '__main__':
                         comments = rs['result']['data']['comments']
                     else:
                         break
-            wb.save(r"D:\red_book\red_book_51wom\red_book_11月\red_book_11_18\red_book_comment.xlsx")
+            wb.save(r"D:\red_book\red_book_51wom\red_book_22_1月\red_book_01_14\red_book_comment_营养健康向.xlsx")

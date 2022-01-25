@@ -146,7 +146,7 @@
 #             ws.append([int(fan)])
 #     wb.save(r"C:\python_project\dts-auto-brief\data\mweibo\fans.xlsx")
 import pandas as pd
-from pyecharts.charts import Pie, Bar
+from pyecharts.charts import Pie, Bar, Line, WordCloud
 from pyecharts.render import make_snapshot
 from snapshot_selenium import snapshot
 from pyecharts import options as opts
@@ -163,11 +163,39 @@ df = pd.DataFrame({"分类": ["1月", "2月", "3月", "4月", "5月", "6月", "7
 # v1 = [18, 59, 26, 38, 9, 17]
 x_data = df['分类'].tolist()
 y_data = df['数据'].tolist()
-c = (
-    Pie()
-        .add("", [list(z) for z in zip(x_data, y_data)])  # zip函数两个部分组合在一起list(zip(x,y))-----> [(x,y)]
-        .set_global_opts(title_opts=opts.TitleOpts(title="自动化工单统计"))  # 标题
-        .set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}%"))  # 数据标签设置
-)
-make_snapshot(snapshot, c.render(), "automation_data.png")
+
+line = Line()
+line.add_xaxis(x_data)
+line.add_yaxis("数据", y_data)
+line.set_global_opts(title_opts=opts.TitleOpts(title="erp折线图", pos_top="48%"),
+                     legend_opts=opts.LegendOpts(pos_top="48%"))
+# c = (
+#     Pie()
+#         .add("", [list(z) for z in zip(x_data, y_data)])  # zip函数两个部分组合在一起list(zip(x,y))-----> [(x,y)]
+#         .set_global_opts(title_opts=opts.TitleOpts(title="自动化工单统计"))  # 标题
+#         .set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}%"))  # 数据标签设置
+# )
+# make_snapshot(snapshot, line.render(), "erp_test.png")
 # c.render("./erp.html")
+
+
+data = [
+    ("生活资源", "999"),
+    ("供热管理", "888"),
+    ("供气质量", "777"),
+    ("生活用水管理", "688"),
+    ("一次供水问题", "588"),
+
+]
+w = (
+    WordCloud()
+    .add(series_name="热点分析", data_pair=data, word_size_range=[6, 66])
+    .set_global_opts(
+        title_opts=opts.TitleOpts(
+            title="热点分析", title_textstyle_opts=opts.TextStyleOpts(font_size=23)
+        ),
+        tooltip_opts=opts.TooltipOpts(is_show=True),
+    )
+    .render("词云图.html")
+)
+# make_snapshot(snapshot, line.render(), "erp_test.png")
