@@ -69,7 +69,7 @@ def short_url_to_long_url(short_url):
 
 
 if __name__ == '__main__':
-    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_10月\red_book_10_26\red_urls.xlsx")
+    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_22_2月\red_book_02_10\red_urls.xlsx")
     urls = df['发布链接']
     wb = Workbook()
     ws = wb.active
@@ -77,5 +77,5 @@ if __name__ == '__main__':
     for url in urls:
         long_url = short_url_to_long_url(url).split("?")[0]
         ws.append([long_url])
-    wb.save(r"D:\red_book\red_book_51wom\red_book_10月\red_book_10_26\red_long_url.xlsx")
+    wb.save(r"D:\red_book\red_book_51wom\red_book_22_2月\red_book_02_10\red_long_url.xlsx")
 

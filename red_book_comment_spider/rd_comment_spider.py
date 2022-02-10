@@ -17,19 +17,16 @@ import openpyxl
 from red_erp.whosecard_open_platform import WhosecardXhsSpider
 
 wh = WhosecardXhsSpider()
-wb = Workbook()
-wb1 = Workbook()
-
-ws = wb.active
-ws1 = wb1.active
-
-ws.append(
-    [
-        "评论内容",
-        "笔记链接"
-    ]
-)
-ws1.append(['失效链接'])
+# wb = Workbook()
+#
+# ws = wb.active
+#
+# ws.append(
+#     [
+#         "评论内容",
+#         "笔记链接"
+#     ]
+# )
 
 USER_AGENTS = [
     "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50",
@@ -84,29 +81,38 @@ headers = {
     'Connection': 'close'
 }
 
+
+def get_comment(note_id):
+    wb = Workbook()
+    ws = wb.active
+    ws.append(["评论内容", "笔记链接"])
+    rs = wh.get_note_comments(note_id)
+    print(rs)
+    # if "result" in rs['result'].keys():
+    if rs is not None:
+        while 'cursor' in rs['result'].keys() and rs['result']['cursor'] is not None:
+            if rs['result']['data']['comments']:
+                comments = rs['result']['data']['comments']
+                for comment in comments:
+                    content = comment['content']
+                    print(content)
+                    ws.append([content])
+                cursor = rs['result']['cursor']
+                rs = wh.get_note_comments(note_id, cursor)
+                if rs is not None:
+                    comments = rs['result']['data']['comments']
+                else:
+                    break
+        wb.save(rf"D:\red_book\red_book_51wom\red_book_22_2月\red_book_02_10\red_book_comment_{note_id}.xlsx")
+
+
 if __name__ == '__main__':
-    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_22_1月\red_book_01_14\red_urls.xlsx")
+    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_22_2月\red_book_02_10\red_urls.xlsx")
     urls = df['发布链接']
     for url in urls:
         if 'apptime' in url:
             note_id = url.split("/")[-1].split("?")[0]
         else:
             note_id = url.split("/")[-1]
-        rs = wh.get_note_comments(note_id)
-        print(rs)
-        # if "result" in rs['result'].keys():
-        if rs is not None:
-            while 'cursor' in rs['result'].keys() and rs['result']['cursor'] is not None:
-                if rs['result']['data']['comments']:
-                    comments = rs['result']['data']['comments']
-                    for comment in comments:
-                        content = comment['content']
-                        print(content)
-                        ws.append([content])
-                    cursor = rs['result']['cursor']
-                    rs = wh.get_note_comments(note_id, cursor)
-                    if rs is not None:
-                        comments = rs['result']['data']['comments']
-                    else:
-                        break
-            wb.save(r"D:\red_book\red_book_51wom\red_book_22_1月\red_book_01_14\red_book_comment_营养健康向.xlsx")
+        get_comment(note_id)
+

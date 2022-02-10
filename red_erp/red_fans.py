@@ -25,13 +25,13 @@ def get_fans(url, u_id):
         fans = user_info['fans']
         print([user_name, fans])
         ws.append([user_name, fans, url])
-        wb.save(r"D:\red_book\red_book_51wom\red_book_22_1月\red_book_01_25\fans1.xlsx")
+        wb.save(r"D:\red_book\red_book_51wom\red_book_22_2月\red_book_02_08\fans.xlsx")
     except Exception as e:
         print(e)
 
 
 if __name__ == '__main__':
-    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_22_1月\red_book_01_25\red_urls.xlsx")
+    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_22_2月\red_book_02_08\red_urls.xlsx")
     urls = df['主页链接']
     for url in urls:
         if '?' in url:
