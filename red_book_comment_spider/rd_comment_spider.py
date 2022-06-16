@@ -17,16 +17,17 @@ import openpyxl
 from red_erp.whosecard_open_platform import WhosecardXhsSpider
 
 wh = WhosecardXhsSpider()
-# wb = Workbook()
-#
-# ws = wb.active
-#
-# ws.append(
-#     [
-#         "评论内容",
-#         "笔记链接"
-#     ]
-# )
+wb = Workbook()
+
+ws = wb.active
+
+ws.append(
+    [
+        "昵称",
+        "评论内容",
+        "笔记链接"
+    ]
+)
 
 USER_AGENTS = [
     "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50",
@@ -82,10 +83,20 @@ headers = {
 }
 
 
+def short_url_to_long_url(short_url):
+    """
+    :param short_url:
+    :return:
+    """
+    res = requests.get(short_url, headers=headers, allow_redirects=False)
+    long_url = res.headers.get('location')
+    return long_url
+
+
 def get_comment(note_id):
-    wb = Workbook()
-    ws = wb.active
-    ws.append(["评论内容", "笔记链接"])
+    # wb = Workbook()
+    # ws = wb.active
+    # ws.append(["评论内容", "笔记链接"])
     rs = wh.get_note_comments(note_id)
     print(rs)
     # if "result" in rs['result'].keys():
@@ -95,24 +106,29 @@ def get_comment(note_id):
                 comments = rs['result']['data']['comments']
                 for comment in comments:
                     content = comment['content']
-                    print(content)
-                    ws.append([content])
+                    nickname = comment['user']['nickname']
+                    ws.append([nickname, content, f"https://www.xiaohongshu.com/discovery/item/{note_id}"])
+                    print([nickname, content, f"https://www.xiaohongshu.com/discovery/item/{note_id}"])
                 cursor = rs['result']['cursor']
                 rs = wh.get_note_comments(note_id, cursor)
                 if rs is not None:
                     comments = rs['result']['data']['comments']
                 else:
                     break
-        wb.save(rf"D:\red_book\red_book_51wom\red_book_22_2月\red_book_02_10\red_book_comment_{note_id}.xlsx")
+        wb.save(rf"./小红书评论/red_book_comment_result.xlsx")
 
 
 if __name__ == '__main__':
-    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_22_2月\red_book_02_10\red_urls.xlsx")
+    df = pd.read_excel(r"./red_comment.xlsx")
     urls = df['发布链接']
     for url in urls:
-        if 'apptime' in url:
+        print(url)
+        if 'xhs' in url:
+            url = short_url_to_long_url(url)
+            note_id = url.split("/")[-1].split("?")[0]
+        elif 'apptime' in url:
             note_id = url.split("/")[-1].split("?")[0]
         else:
             note_id = url.split("/")[-1]
+        print(note_id)
         get_comment(note_id)
-

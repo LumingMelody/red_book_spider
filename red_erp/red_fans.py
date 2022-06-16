@@ -19,19 +19,20 @@ ws.append([
 def get_fans(url, u_id):
     try:
         result = xhs.get_user_info(u_id)
+        time.sleep(2)
         user_info = result['result']['data']
         print(u_id)
         user_name = user_info['nickname']
         fans = user_info['fans']
         print([user_name, fans])
         ws.append([user_name, fans, url])
-        wb.save(r"D:\red_book\red_book_51wom\red_book_22_2月\red_book_02_08\fans.xlsx")
+        wb.save(r"./fans.xlsx")
     except Exception as e:
         print(e)
 
 
 if __name__ == '__main__':
-    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_22_2月\red_book_02_08\red_urls.xlsx")
+    df = pd.read_excel(r"./red_urls.xlsx")
     urls = df['主页链接']
     for url in urls:
         if '?' in url:
@@ -39,4 +40,4 @@ if __name__ == '__main__':
         else:
             u_id = url.split("/")[-1]
         get_fans(url, u_id)
-        # time.sleep(5)
+        time.sleep(4)

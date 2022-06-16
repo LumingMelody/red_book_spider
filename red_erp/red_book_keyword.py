@@ -367,14 +367,15 @@ def short_url_to_long_url(short_url):
 
 
 if __name__ == '__main__':
-
     wh = WhosecardXhsSpider()
-    key_word_list = ["户外装备"]
+    key_word_list = ["杨枝甘露"]
     # rs = wh.get_note_comments()
     # print(rs)
     for keyword in key_word_list:
-        for i in range(50):
+        for i in range(1, 50):
+            print(i)
             rs = wh.get_search_notes(keyword, page=i + 1)
+            # time.sleep(10)
             print(rs)
             try:
                 if rs and rs['result']['data'] is not None:
@@ -383,7 +384,7 @@ if __name__ == '__main__':
                     for item in items:
                         # print(item)
                         note_ts = item['note']['timestamp']
-                        if 1627747200 <= int(note_ts) <= 1638945195:
+                        if 1609430400 <= int(note_ts) <= 1652955063:
                             try:
                                 user_id = item['note']['user']['userid']
                                 user_url = f'https://www.xiaohongshu.com/user/profile/{user_id}'
@@ -457,8 +458,8 @@ if __name__ == '__main__':
                                        note_likes, note_comments, note_coll, note_share, note_collected_like,
                                        interaction,
                                        score, note_cooperate_binds, note_tag])
-                                wb.save(r"D:\red_book\red_book_51wom\red_book_22_1月\red_book_01_14\小红书_"
-                                        r"{keyword}_01_18_result.xlsx".format(keyword=keyword))
+                                wb.save(r"./小红书_"
+                                        r"{keyword}_05_16_result.xlsx".format(keyword=keyword))
                             except Exception as a:
                                 print(a)
             except Exception as e:
