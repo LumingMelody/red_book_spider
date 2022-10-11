@@ -146,28 +146,28 @@ def geturl(url):
 
 
 if __name__ == '__main__':
-    # main("6040aff80000000001028082")
+    main("6305adca000000001d034375")
     # df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_11月\red_book_11_12\red_urls.xlsx")
-    df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_22_1月\red_book_01_25\red_urls.xlsx")
-    urls = df['文章链接']
-
-    try:
-        # for note_id in note_ids:
-        #     main(note_id)
-        # with ThreadPoolExecutor(10) as t:
-        for url in urls:
-            # url = geturl(url)
-            # print(url)
-            if 'apptime' in url:
-                note_id = url.split("/")[-1].split("?")[0]
-            # elif 'xhslink.com' in url:
-            #     long_url = short_url_to_long_url(url)
-            #     note_id = long_url.split("/")[-1].split("?")[0]
-            else:
-                note_id = url.split("/")[-1]
-            print(note_id)
-            main(note_id)
-            # time.sleep(3)
-        # wb1.save(r"D:\red_book\red_book_51wom\red_book_8月\red_book_08_20\娇诗韵文章链接.xlsx")
-    except Exception as e:
-        print(e)
+    # df = pd.read_excel(r"D:\red_book\red_book_51wom\red_book_22_1月\red_book_01_25\red_urls.xlsx")
+    # urls = df['文章链接']
+    #
+    # try:
+    #     # for note_id in note_ids:
+    #     #     main(note_id)
+    #     # with ThreadPoolExecutor(10) as t:
+    #     for url in urls:
+    #         # url = geturl(url)
+    #         # print(url)
+    #         if 'apptime' in url:
+    #             note_id = url.split("/")[-1].split("?")[0]
+    #         # elif 'xhslink.com' in url:
+    #         #     long_url = short_url_to_long_url(url)
+    #         #     note_id = long_url.split("/")[-1].split("?")[0]
+    #         else:
+    #             note_id = url.split("/")[-1]
+    #         print(note_id)
+    #         main(note_id)
+    #         # time.sleep(3)
+    #     # wb1.save(r"D:\red_book\red_book_51wom\red_book_8月\red_book_08_20\娇诗韵文章链接.xlsx")
+    # except Exception as e:
+    #     print(e)
